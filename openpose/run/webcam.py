@@ -1,4 +1,4 @@
-mport cv2
+import cv2
 from pathlib import Path
 
 # MPII에서 각 파트 번호, 선으로 연결될 POSE_PAIRS
@@ -12,9 +12,12 @@ POSE_PAIRS = [ ["Head", "Neck"], ["Neck", "RShoulder"], ["RShoulder", "RElbow"],
                 ["LElbow", "LWrist"], ["Neck", "Chest"], ["Chest", "RHip"], ["RHip", "RKnee"],
                 ["RKnee", "RAnkle"], ["Chest", "LHip"], ["LHip", "LKnee"], ["LKnee", "LAnkle"] ]
     
-# 각 파일 path
+# BASE_DIR = openpose 폴더
 BASE_DIR=Path(__file__).resolve().parent.parent
-protoFile = str(BASE_DIR)+"/file/pose_deploy_linevec_faster_4_stages.prototxt"
+
+#prototxt
+protoFile = str(BASE_DIR)+"\\models\\pose\\body_25\\pose_deploy.prototxt"
+#coffemodel
 weightsFile = str(BASE_DIR)+"/file/pose_iter_160000.caffemodel"
  
 # 위의 path에 있는 network 모델 불러오기
