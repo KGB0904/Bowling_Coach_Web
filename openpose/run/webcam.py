@@ -13,7 +13,7 @@ POSE_PAIRS = [ ["Head", "Neck"], ["Neck", "RShoulder"], ["RShoulder", "RElbow"],
                 ["RKnee", "RAnkle"], ["Chest", "LHip"], ["LHip", "LKnee"], ["LKnee", "LAnkle"] ]
     
 # 각 파일 path
-BASE_DIR=Path(__file__).resolve().parent
+BASE_DIR=Path(__file__).resolve().parent.parent
 protoFile = str(BASE_DIR)+"/file/pose_deploy_linevec_faster_4_stages.prototxt"
 weightsFile = str(BASE_DIR)+"/file/pose_iter_160000.caffemodel"
  
