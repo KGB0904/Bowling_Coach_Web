@@ -5,9 +5,9 @@ from pathlib import Path
 BASE_DIR=Path(__file__).resolve().parent
 #print(BASE_DIR)
 path=str(BASE_DIR)+"\\graph.opt.pb"
-#print("!!!!!!!",path)
+print("!!!!!!!",path)
 #net =cv.dnn.readNetFromTensorflow(path)
-net = cv.dnn.readNetFromTensorflow("C:/Users/dongj/Desktop/Bowling_Coach/openpose2/human-pose-estimation-opencv-master/graph_opt.pb")
+net = cv.dnn.readNetFromTensorflow("graph_opt.pb")
 
 
 inWidth = 368
@@ -25,5 +25,56 @@ POSE_PAIRS = [ ["Neck", "RShoulder"], ["Neck", "LShoulder"], ["RShoulder", "RElb
                    ["LHip", "LKnee"], ["LKnee", "LAnkle"], ["Neck", "Nose"], ["Nose", "REye"],
                    ["REye", "REar"], ["Nose", "LEye"], ["LEye", "LEar"] ]
 
-img=cv.imread("C:\\Users\\dongj\\Desktop\\Bowling_Coach\\openpose2\\human-pose-estimation-opencv-master\\image.jpg")
-plt.imshow(img)
+
+img=cv.imread("image.jpg")
+plt.imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB)) # OpenCV에서 읽은 이미지의 색상 체계를 Matplotlib에서 인식하는 RGB로 변환하여 표시합니다.
+plt.axis('off') # 축을 제거하여 이미지를 보다 깔끔하게 표시합니다.
+plt.show() # 이미지를 화면에 표시합니다.
+
+def pose_estimation(frame):
+    frameWidth=frame.shape[1]
+    frameHeight=frame.shape[0]
+    net.setInput(cv.dnn.blobFromImage(frame, 1.0, (inWidth, inHeight), (127.5, 127.5, 127.5), swapRB=True, crop=False))
+    out=net.forward()
+    out=out[:, :19, :, :]
+
+    assert(len(BODY_PARTS) == out.shape[1])
+
+    points=[]
+
+    for i in range(len(BODY_PARTS)):
+        heatMap=out[0,i,:,:]
+
+        _, conf, _, point = cv.minMaxLoc(heatMap)
+        x=(frameWidth*point[0]/out.shape[3])
+        y=(frameHeight*point[1]/out.shape[2])
+
+        points.append((int(x), int(y)) if conf > thr else None)
+
+    for pair in POSE_PAIRS:
+        partFrom = pair[0]
+        partTo=pair[1]
+        assert(partFrom in BODY_PARTS)
+        assert(partTo in BODY_PARTS)
+
+        idFrom = BODY_PARTS[partFrom]
+        idTo=BODY_PARTS[partTo]
+
+        if points[idFrom] and points[idTo]:
+            cv.line(frame, points[idFrom], points[idTo], (0, 255, 0), 3)
+            cv.ellipse(frame, points[idFrom], (3,3), 0, 0, 360, (0, 0, 255), cv.FILLED)
+            cv.ellipse(frame, points[idTo], (3,3), 0, 0, 360, (0, 0, 255), cv.FILLED)
+
+    t, _=net.getPerfProfile()
+    freq=cv.getTickFrequency() / 1000
+    cv.putText(frame, '%.2fms'%(t / freq), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0))
+    return frame
+
+estimated_image = pose_estimation(img)
+plt.imshow(cv.cvtColor(estimated_image, cv.COLOR_BGR2RGB))
+plt.show() # 이미지를 화면에 표시합니다.
+
+#######################################################
+# mp4 디텍팅
+#######################################################
+

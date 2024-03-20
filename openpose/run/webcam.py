@@ -18,7 +18,7 @@ BASE_DIR=Path(__file__).resolve().parent.parent
 #prototxt
 protoFile = str(BASE_DIR)+"\\models\\pose\\body_25\\pose_deploy.prototxt"
 #coffemodel
-weightsFile = str(BASE_DIR)+"/file/pose_iter_160000.caffemodel"
+weightsFile = str(BASE_DIR)+"\\models\\pose\\body_25\\pose_iter_584000.caffemodel"
  
 # 위의 path에 있는 network 모델 불러오기
 net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
