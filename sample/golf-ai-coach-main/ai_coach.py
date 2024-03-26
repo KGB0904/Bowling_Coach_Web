@@ -104,8 +104,12 @@ while cap.isOpened():       #비디오 캡처 객체가 열려있는 동안 실�
         #img_result : 도형 및 랜드마크가 그려진 이미지
         else:
             #img_result에 첫번째 프레임 머리의 중심좌표와 반지름을 사용해서 노란색(0,255,255)의 원을 2만큼의 선의 두깨로 원 그리기
+            #직사각형 pt1 : 왼쪽 위 점, pt2 : 오른쪽 아래 점
+            #cv2.rectangle(img_result, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 255), thickness=2)
+
             cv2.circle(img_result, center=(first_center_x, first_center_y),
                 radius=first_radius, color=(0, 255, 255), thickness=2)
+            
 
             color = (0, 255, 0) # 초록색
 
