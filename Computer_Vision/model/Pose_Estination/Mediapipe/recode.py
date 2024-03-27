@@ -53,8 +53,17 @@ with open(csv_file_path, mode='w', newline='') as file:
 
             # 오른쪽 손목 랜드마크 가져오기
             right_wrist_landmark = None
+            right_elbow_landmark = None
+            right_shoulder_landmark = None
+
             if results.pose_landmarks:
                 right_wrist_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST]
+                right_elbow_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ELBOW]
+                right_shoulder_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+
+
+
+
 
             # 랜드마크가 감지되었으면 손목 좌표를 CSV에 기록
             if right_wrist_landmark and right_wrist_landmark.visibility > 0.5:
@@ -68,6 +77,9 @@ with open(csv_file_path, mode='w', newline='') as file:
                     writer.writerow([frame_number, x_px, y_px])
                     last_time = current_time
                     cnt += 1
+
+            if right_elbow_landmark and right_elbow_landmark.visibility > 0.5:
+
 
             frame_number += 1
 
