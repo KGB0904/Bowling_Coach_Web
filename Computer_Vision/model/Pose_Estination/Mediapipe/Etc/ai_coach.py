@@ -1,6 +1,6 @@
 #수정예정 검색해서 코드 가져다 쓰기
 
-
+import os
 import cv2
 import mediapipe as mp
 
@@ -15,8 +15,13 @@ mp_drawing_styles = mp.solutions.drawing_styles
 #미디어파이프 포즈 제공, 포즈 추정 : 사용자가 어떤 포즈를 취하는지.
 mp_pose = mp.solutions.pose
 
-#비디오 경로
-video_path = '02.mp4'
+#data\bowling1.mp4 경로
+root_path=os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+data_path=os.path.join(root_path,"data")
+video_path=os.path.join(data_path,"bowling1.mp4")
+
+
+
 
 #비디오 캡처 객체 : 동영상 데이터를 어디서 가져올껀지
 cap = cv2.VideoCapture(video_path)
