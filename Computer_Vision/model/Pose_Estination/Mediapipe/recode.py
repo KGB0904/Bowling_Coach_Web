@@ -65,11 +65,31 @@ with open(csv_file_path, mode='w', newline='') as file:
 
 
 
-            # 랜드마크가 감지되었으면 손목 좌표를 CSV에 기록
+            check_sh=False
+            check_el=False
+            check_wr=False
+            # 어깨  점
+            if right_shoulder_landmark and right_shoulder_landmark.visibility > 0.5:
+                image_height, image_width, _ = image.shape
+                x_sh, y_sh = int(right_shoulder_landmark.x * image_width), int(right_shoulder_landmark.y * image_height)
+                cv2.circle(image, (x_sh, y_sh), 5, (255, 0, 0), -1)
+                check_sh=True
+
+                
+
+            # 팔꿈치 점
+            if right_elbow_landmark and right_elbow_landmark.visibility > 0.5:
+                image_height, image_width, _ = image.shape
+                x_elbow, y_elbow = int(right_elbow_landmark.x * image_width), int(right_elbow_landmark.y * image_height)
+                cv2.circle(image, (x_elbow, y_elbow), 5, (255, 0, 0), -1)
+                check_el=True
+                
+            # 손목 점
             if right_wrist_landmark and right_wrist_landmark.visibility > 0.5:
                 image_height, image_width, _ = image.shape
                 x_px, y_px = int(right_wrist_landmark.x * image_width), int(right_wrist_landmark.y * image_height)
                 cv2.circle(image, (x_px, y_px), 5, (0, 255, 0), -1)
+                check_wr=True
 
                 # 0.2초 간격으로 CSV 파일에 기록
                 current_time = time.time()
@@ -77,9 +97,14 @@ with open(csv_file_path, mode='w', newline='') as file:
                     writer.writerow([frame_number, x_px, y_px])
                     last_time = current_time
                     cnt += 1
+            
+            # 어깨부터 팔꿈치까지 선 그리기
+            if check_sh and check_el:
+                cv2.line(image, (x_sh, y_sh), (x_elbow, y_elbow), (255, 255, 255), 2)
 
-            if right_elbow_landmark and right_elbow_landmark.visibility > 0.5:
-
+            # 팔꿈치부터 손목까지 선 그리기
+            if check_el and check_wr:
+                cv2.line(image, (x_elbow, y_elbow), (x_px, y_px), (255, 255, 255), 2)
 
             frame_number += 1
 
