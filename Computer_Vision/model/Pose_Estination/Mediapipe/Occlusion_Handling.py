@@ -17,20 +17,21 @@ data_path = os.path.join(root_path, "data")
 input_path = os.path.join(data_path, "input")
 mp4_path = os.path.join(input_path, "mp4")
 
-filename="bowling1.mp4"
-
-video_path = os.path.join(mp4_path, filename)
-print("!!!!!!!!",video_path)
-
 #csv 파일 경로 설정
 output_path = os.path.join(data_path, "output")
 Coo_path=os.path.join(output_path,"Coordinate")
 Med_path=os.path.join(Coo_path,"Mediapipe")
 
-#OH_path=os.path.join(output_path,"Occlusion_Handling")
+#################################################################
+#mp4파일경로
+filename="bowling1.mp4"
+#csv 파일경로
 csv_file_path = os.path.join(Med_path, "bowling1.csv")
+#################################################################
 
-print("!!!!!!",csv_file_path)
+
+
+video_path = os.path.join(mp4_path, filename)
 # 비디오 캡처 객체 생성
 cap = cv2.VideoCapture(video_path)
 last_time = time.time()
@@ -104,7 +105,7 @@ with open(csv_file_path, mode='w', newline='') as file:
                     cnt += 1
             
             # 어깨부터 팔꿈치까지 선 그리기
-            if check_sh and check_el:
+            if check_sh and check_el: 
                 cv2.line(image, (x_sh, y_sh), (x_elbow, y_elbow), (255, 255, 255), 2)
 
             # 팔꿈치부터 손목까지 선 그리기
@@ -119,11 +120,15 @@ with open(csv_file_path, mode='w', newline='') as file:
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
-end_time = time.time()
-duration = end_time - start_time
+    end_time = time.time()
+    duration = end_time - start_time
+    msg=f"During {round(duration, 3)} seconds, {cnt} wrist movements were captured every 0.2 seconds."
+    writer.writerow([msg,None,None])
+
 
 # CSV 파일의 마지막 줄에 메시지 추가
 print([f"{round(duration, 3)}초 동안 0.2초당 {cnt}번의 손목이 포착되었습니다."])
+
 
 
 # 리소스 해제
