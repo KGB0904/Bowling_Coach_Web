@@ -16,11 +16,12 @@ root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__fi
 data_path = os.path.join(root_path, "data")
 mp4_path = os.path.join(data_path, "mp4")
 
-filename="bowling1.mp4"
+filename="bowling2.mp4"
 
 video_path = os.path.join(mp4_path, filename)
 csv_path = os.path.join(data_path, "csv")
-csv_file_path = os.path.join(csv_path, "Mediapipe_recode.csv")
+Med_path=os.path.join(csv_path,"Mediapipe")
+csv_file_path = os.path.join(Med_path, "bowling2.csv")
 
 # 비디오 캡처 객체 생성
 cap = cv2.VideoCapture(video_path)
@@ -60,10 +61,6 @@ with open(csv_file_path, mode='w', newline='') as file:
                 right_wrist_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST]
                 right_elbow_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ELBOW]
                 right_shoulder_landmark = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
-
-
-
-
 
             check_sh=False
             check_el=False
@@ -105,6 +102,7 @@ with open(csv_file_path, mode='w', newline='') as file:
             # 팔꿈치부터 손목까지 선 그리기
             if check_el and check_wr:
                 cv2.line(image, (x_elbow, y_elbow), (x_px, y_px), (255, 255, 255), 2)
+
 
             frame_number += 1
 
