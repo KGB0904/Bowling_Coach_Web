@@ -1,6 +1,6 @@
-#미디어파이프와 무브넷 성능비교 코드 1
-#0.2초당 몇번의 손목을 포착하는지
-#output cs
+#Occlusion Handlin 성능 평가 코드
+#0.2초당 1번꼴로 손목을 추적했을 때 예측을 통한 추적이 가능한 무브넷보다 얼마나 덜 추적할 수 있는지
+
 
 import cv2
 import os
@@ -11,21 +11,24 @@ import mediapipe as mp
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-# 파일 경로 설정
+# 비디오 파일 경로 설정
 root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 data_path = os.path.join(root_path, "data")
-mp4_path = os.path.join(data_path, "mp4")
+input_path = os.path.join(data_path, "input")
+mp4_path = os.path.join(input_path, "mp4")
 
-filename="bowling3.mp4"
+filename="bowling1.mp4"
 
 video_path = os.path.join(mp4_path, filename)
+print("!!!!!!!!",video_path)
 
-csv_path = os.path.join(data_path, "csv")
-Med_path=os.path.join(csv_path,"Mediapipe")
-cat_path=os.path.join(Med_path,"catch")
+#csv 파일 경로 설정
+output_path = os.path.join(data_path, "output")
+Coo_path=os.path.join(output_path,"Coordinate")
+Med_path=os.path.join(Coo_path,"Mediapipe")
 
-
-csv_file_path = os.path.join(cat_path, "bowling3.csv")
+#OH_path=os.path.join(output_path,"Occlusion_Handling")
+csv_file_path = os.path.join(Med_path, "bowling1.csv")
 
 print("!!!!!!",csv_file_path)
 # 비디오 캡처 객체 생성
