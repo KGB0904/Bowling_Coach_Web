@@ -5,3 +5,6 @@
 
 ## Computer_Vision
 ### 영상분석 모델 사용해서 코칭 로직 개발 
+
+## 경보 Git
+https://github.com/Koz-cec/-_MoveNet
