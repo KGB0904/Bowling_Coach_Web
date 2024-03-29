@@ -21,12 +21,13 @@ mp4_path = os.path.join(input_path, "mp4")
 output_path = os.path.join(data_path, "output")
 Coo_path=os.path.join(output_path,"Coordinate")
 Med_path=os.path.join(Coo_path,"Mediapipe")
+arm_path=os.path.join(Med_path,"arm")
 
 #################################################################
 #mp4파일경로
 filename="bowling1.mp4"
 #csv 파일경로
-csv_file_path = os.path.join(Med_path, "bowling1.csv")
+csv_file_path = os.path.join(arm_path, "bowling1.csv")
 #################################################################
 
 
