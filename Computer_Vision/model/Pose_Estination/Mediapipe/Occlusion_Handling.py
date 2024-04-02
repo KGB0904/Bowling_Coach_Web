@@ -1,5 +1,5 @@
 #Occlusion Handlin 성능 평가 코드
-#0.2초당 1번꼴로 손목을 추적했을 때 예측을 통한 추적이 가능한 무브넷보다 얼마나 덜 추적할 수 있는지
+#SECOND초당 1번꼴로 손목을 추적했을 때 예측을 통한 추적이 가능한 무브넷보다 얼마나 덜 추적할 수 있는지
 
 
 import cv2
@@ -8,6 +8,8 @@ import csv
 import time
 import mediapipe as mp
 from Etc.check_gpu import check_gpu
+
+SECOND=10 #몇초 단위로 할건지
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -38,7 +40,7 @@ video_path = os.path.join(mp4_path, filename)
 # 비디오 캡처 객체 생성
 cap = cv2.VideoCapture(video_path)
 last_time = time.time()
-cnt = 0  # 0.2초당 확인된 횟수
+cnt = 0  # SECOND초당 확인된 횟수
 frame_number = 0
 
 # 손목 좌표를 저장할 CSV 파일 생성
@@ -102,9 +104,9 @@ with open(csv_file_path, mode='w', newline='') as file:
                 cv2.circle(image, (x_px, y_px), 5, (0, 255, 0), -1)
                 check_wr=True
 
-                # 0.2초 간격으로 CSV 파일에 기록
+                # SECOND초 간격으로 CSV 파일에 기록
                 current_time = time.time()
-                if current_time - last_time >= 0.2:
+                if current_time - last_time >= SECOND:
                     writer.writerow([frame_number, x_px, y_px])
                     last_time = current_time
                     cnt += 1
@@ -127,12 +129,12 @@ with open(csv_file_path, mode='w', newline='') as file:
 
     end_time = time.time()
     duration = end_time - start_time
-    msg=f"During {round(duration, 3)} seconds, {cnt} wrist movements were captured every 0.2 seconds."
+    msg=f"During {round(duration, 3)} seconds, {cnt} wrist movements were captured every {SECOND} seconds."
     writer.writerow([msg,None,None])
 
 
 # CSV 파일의 마지막 줄에 메시지 추가
-print([f"{round(duration, 3)}초 동안 0.2초당 {cnt}번의 손목이 포착되었습니다."])
+print([f"{round(duration, 3)}초 동안 {SECOND}초당 {cnt}번의 손목이 포착되었습니다."])
 
 avg_gpu=sum_gpu/cnt_gpu
 
