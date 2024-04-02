@@ -2,7 +2,9 @@ import cv2
 import os
 import mediapipe as mp
 import csv
+
 from datetime import datetime, timedelta
+from Etc.check_gpu import check_gpu
 
 root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 data_path = os.path.join(root_path, "data")
@@ -11,7 +13,8 @@ mp4_path = os.path.join(input_path, "mp4")
 video_path = os.path.join(mp4_path, "bowling1.mp4")
 
 
-
+sum_gpu=0
+cnt_gpu=0
 #csv 파일 경로 설정
 output_path = os.path.join(data_path, "output")
 Coo_path=os.path.join(output_path,"Coordinate")
@@ -71,6 +74,8 @@ while cap.isOpened():
         # 첫 프레임의 랜드마크 좌표도 기록합니다.
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = pose.process(frame_rgb)
+        sum_gpu+=check_gpu()
+        cnt_gpu+=1
         if results.pose_landmarks:
             with open(csv_file_path, mode='a', newline='') as file:
                 writer = csv.writer(file)
@@ -79,6 +84,7 @@ while cap.isOpened():
                         height, width, _ = frame.shape
                         cx, cy = int(landmark.x * width), int(landmark.y * height)
                         writer.writerow([start_time, landmark_mapping[idx], cx, cy])
+        
     elif current_time - start_time >= 1:
         start_time = current_time
         # 미디어파이프로 포즈 추정을 수행합니다.
@@ -102,6 +108,9 @@ while cap.isOpened():
         break
     elif key == ord('p'):
         play = not play
+
+avg_gpu=sum_gpu/cnt_gpu
+print(f"평균 GPU 사용량 : {round(avg_gpu,3)}%")
 
 # 종료합니다.
 cap.release()

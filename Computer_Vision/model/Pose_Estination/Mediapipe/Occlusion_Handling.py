@@ -7,6 +7,7 @@ import os
 import csv
 import time
 import mediapipe as mp
+from Etc.check_gpu import check_gpu
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -30,7 +31,8 @@ filename="bowling1.mp4"
 csv_file_path = os.path.join(arm_path, "bowling1.csv")
 #################################################################
 
-
+sum_gpu=0
+cnt_gpu=0
 
 video_path = os.path.join(mp4_path, filename)
 # 비디오 캡처 객체 생성
@@ -58,7 +60,9 @@ with open(csv_file_path, mode='w', newline='') as file:
             image.flags.writeable = False
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results = pose.process(image)
-
+            sum_gpu+=check_gpu()
+            cnt_gpu+=1
+            
             # 이미지 원본 복원
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
@@ -130,8 +134,9 @@ with open(csv_file_path, mode='w', newline='') as file:
 # CSV 파일의 마지막 줄에 메시지 추가
 print([f"{round(duration, 3)}초 동안 0.2초당 {cnt}번의 손목이 포착되었습니다."])
 
+avg_gpu=sum_gpu/cnt_gpu
 
-
+print(f"평균 GPU 사용량 : {round(avg_gpu,3)}%")
 # 리소스 해제
 cap.release()
 cv2.destroyAllWindows()
