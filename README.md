@@ -1,4 +1,5 @@
 
+### ⭐⭐⭐server/src/server.js에 "수정" 이라는 단어 검색해서 딥러닝 환경 없는 환경에서 실행하기(랩실에선 딥러닝 환경으로 가능)⭐⭐⭐
 
 <img src="https://capsule-render.vercel.app/api?type=shark&color=0:EEFF00,100:a82da8&height=300&section=header&text=FeedBack_Wep&fontSize=90" />
 
@@ -42,7 +43,6 @@
 **사용자의 볼링 자세가 얼마나 좋은 자세인지 PBA 선수들의 투구폼을 위주로 학습된 딥러닝 모델로 판단해주는 볼링 자세 교정 플랫폼입니다.**
 
 
-### ⭐⭐⭐server/src/server.js에 "수정" 이라는 단어 검색해서 딥러닝 환경 없는 환경에서 실행하기⭐⭐⭐
 
 
 
