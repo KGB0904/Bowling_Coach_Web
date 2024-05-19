@@ -45,8 +45,17 @@
 
 ## 실행 예시
 ---
+#### [1]
 ![1](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/a6e5ec4e-9341-4938-87ce-c8329d328436)
 
+#### [2]
+![2](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/389b4a03-0636-4ea0-ac8f-b4bd5f9d4d18)
+
+#### [3]
+![3](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/8952ba23-79a2-49c8-a981-24cbc2770d21)
+
+#### [4]
+![4](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/e24a7acc-0b3e-450d-ba5a-1014d731ab18)
 
 
 
