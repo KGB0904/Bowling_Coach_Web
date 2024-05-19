@@ -1,0 +1,71 @@
+.main-header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 20px;
+  padding-left: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.home-link {
+  background-color: #C8A2C8; /* 연한 라벤더 색상 */
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 20px; /* 둥근 모서리 */
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 살짝 그림자 */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+.home-link:hover {
+  background-color: #B57EDC; /* 마우스 오버 시 색상 변화 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 변화 */
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f5;
+  padding: 0;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+#terminalOutput {
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+  width: 80%;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#progressContainer {
+  width: 80%;
+  background-color: #e0e0e0;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0;
+  height: 30px;
+  background-color: #e6e6fa; /* Lavender color */
+  text-align: center;
+  line-height: 30px;
+  color: #4a4a4a;
+  border-radius: 25px;
+  transition: width 0.5s ease-in-out;
+}
