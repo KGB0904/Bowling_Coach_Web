@@ -17,10 +17,15 @@ const io = socketIo(server);
 const multer = require("./middlewares/multer");
 const { cutVideoController } = require("./useCases/CutVideo");
 const { getVideoController } = require("./useCases/GetVideo");
+const { getGraphUseCase    } = require("./useCases/GetGraph");
+
 
 //전역경로
 const processor_path = path.resolve(__dirname, '..', '..', 'model', 'processor.py');
 const sample_path = path.resolve(__dirname, '..', '..', 'model', 'ETC','sample.py');
+
+//DB
+recodeFilePath = path.resolve(__dirname, '..','DB', 'recode.txt')
 
 let video_filePath='' //양동이
 
@@ -33,6 +38,8 @@ app.use(express.static(path.resolve(__dirname, '..', 'temp', 'edited')));    //t
 app.use(express.static(path.resolve(__dirname, '..', 'temp', 'raw')));       //raw
 app.use(express.static(path.resolve(__dirname, '..', 'FBHtml')));
 app.use(express.static(path.resolve(__dirname, '..', 'LoadHtml')));  
+app.use(express.static(path.resolve(__dirname, '..', 'GetGraph')));  
+
 
 
 
@@ -83,9 +90,15 @@ app.get('/feedback', (req, res) => {
   let html = fs.readFileSync(path.resolve(__dirname, '..','FBHtml/feedback.html'), 'utf8');
   html = html.replace('{{pythonOutput}}', pythonOutput);
   html = html.replace('{{numberOutput}}', numberOutput);
-  res.send(html);
+  //htmlFilePath = path.resolve(__dirname,'..','GraphHtml','graph.html');
+  
+  //꺾은선 그래프
+  html = getGraphUseCase.updateGraphHtml(html, recodeFilePath, numberOutput);
 
+  res.send(html);
 });
+
+
 
 
 //피드백 클라이언트 대기

@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="feedback.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    
 </head>
 <body>
@@ -18,13 +19,16 @@
         <div class="chart-container">
             <div class="chart" style="--percentage: 0%;">
                 <div class="percentage">0%</div>
-            </div>
+            </div>  
         </div>
         <div class="alert alert-primary mt-4" role="alert">
             <pre id="pythonOutput">{{pythonOutput}}</pre>
         </div>
         <button class="btn btn-primary" id="replay" onclick="location.href='/start'">✂️비디오 편집</button>
 
+    </div>
+    <div class="graph-container">
+        <canvas id="myLineChart"></canvas>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
@@ -34,38 +38,89 @@
     <script>
         function setChartColor(percentage) {
         const chart = document.querySelector('.chart');
-        if (percentage < 60) {
-            chart.style.background = `conic-gradient(#ff0000 0, #ff0000 ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
-        } else if (percentage < 80) {
-            chart.style.background = `conic-gradient(#ffeb3b 0, #ffeb3b ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
-        } else if (percentage < 95) {
-            chart.style.background = `conic-gradient(#4caf50 0, #4caf50 ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
-        } else {
-            chart.style.background = `conic-gradient(red, orange, yellow, green, blue, indigo, violet)`;
-        }
-    }
-
-    function animateProgress(targetPercentage, duration) {
-        const percentageElem = document.querySelector('.percentage');
-        let start = null;
-
-        function step(timestamp) {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            const percentage = Math.min((progress / duration) * targetPercentage, targetPercentage);
-            setChartColor(percentage);
-            percentageElem.textContent = `${Math.round(percentage)}%`;
-
-            if (percentage < targetPercentage) {
-                window.requestAnimationFrame(step);
+            if (percentage < 60) {
+                chart.style.background = `conic-gradient(#ff0000 0, #ff0000 ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
+            } else if (percentage < 80) {
+                chart.style.background = `conic-gradient(#ffeb3b 0, #ffeb3b ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
+            } else if (percentage < 95) {
+                chart.style.background = `conic-gradient(#4caf50 0, #4caf50 ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
+            } else {
+                chart.style.background = `conic-gradient(red, orange, yellow, green, blue, indigo, violet)`;
             }
         }
 
-        window.requestAnimationFrame(step);
-    }
+        function animateProgress(targetPercentage, duration) {
+            const percentageElem = document.querySelector('.percentage');
+            let start = null;
 
-    const initialPercentage = parseInt('{{numberOutput}}', 10);
-    animateProgress(initialPercentage, 3000);
-        </script>
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                const percentage = Math.min((progress / duration) * targetPercentage, targetPercentage);
+                setChartColor(percentage);
+                percentageElem.textContent = `${Math.round(percentage)}%`;
+
+                if (percentage < targetPercentage) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+
+            window.requestAnimationFrame(step);
+        }
+
+        const initialPercentage = parseInt('{{numberOutput}}', 10);
+        animateProgress(initialPercentage, 3000);
+
+        //////////////////////////////////////////////////////////////////
+        //꺽은 선 그래프 (아래)
+        //////////////////////////////////////////////////////////////////
+
+        const recode = JSON.parse('{{accuracys}}');
+        const  x_under= JSON.parse('{{count}}');
+        //const intArray = count.map(Number);
+        //console.log(recode);
+        //console.log(count);
+        const data = {
+            labels: x_under,
+            datasets: [{
+                label: 'Pose Accuracy',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                data: recode,
+                fill: false,
+            }]
+        };
+
+        // 옵션을 설정합니다.
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Pose Accuracy'
+                        }
+                    }
+                }
+            }
+        };
+
+        // 차트를 생성합니다.
+        window.onload = function() {
+            const ctx = document.getElementById('myLineChart').getContext('2d');
+            new Chart(ctx, config);
+        };
+    </script>
 </body>
 </html>

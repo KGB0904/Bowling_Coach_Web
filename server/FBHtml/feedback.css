@@ -97,3 +97,8 @@ pre {
     font-size: 2em;
     color: #4caf50;
 }
+
+.graph-container {
+    width: 80%;
+    margin: auto;
+}
