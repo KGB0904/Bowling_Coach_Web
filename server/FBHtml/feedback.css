@@ -102,3 +102,7 @@ pre {
     width: 80%;
     margin: auto;
 }
+
+#myLineChart {
+    margin-top: 50px
+}

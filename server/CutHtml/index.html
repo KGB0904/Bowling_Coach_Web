@@ -97,27 +97,29 @@
                                 >
                             </div>
                         </div>
-                        
-                        <div class="input-submit">
-                            <input 
-                                class="button" 
-                                type="submit" 
-                                value="🎬자르기"
-                                onclick="javascript:
-                                form.action='/cut'"
-                                disabled
-                            >
+                        <div class="button-container">
+                            <div class="input-submit">
+                                <input 
+                                    class="button" 
+                                    type="submit" 
+                                    value="🎬자르기"
+                                    onclick="javascript:
+                                    form.action='/cut'"
+                                    disabled
+                                >
+                            </div>
+                            <div class="test-submit">
+                                <input 
+                                    class="button" 
+                                    type="submit" 
+                                    value="🤖피드백"
+                                    onclick="javascript:
+                                    form.action='/load'"
+                                    disabled
+                                >
+                            </div>
                         </div>
-                        <div class="test-submit">
-                            <input 
-                                class="button" 
-                                type="submit" 
-                                value="🤖피드백"
-                                onclick="javascript:
-                                form.action='/load'"
-                                disabled
-                            >
-                        </div>
+
                         <p class="message"></p>
                     </fieldset>
                 </form>

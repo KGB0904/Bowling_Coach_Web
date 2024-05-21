@@ -96,6 +96,13 @@ form legend {
     font-weight: 600;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center; /* 버튼들을 중앙에 배치 */
+    align-items: center; /* 버튼들의 높이를 동일하게 맞춤 */
+    gap: 10px; /* 버튼 간의 간격을 조절 */
+}
+
 form .button {
     width: 20rem;
     height: 4rem;
@@ -170,7 +177,8 @@ form #preview {
 
 form #preview video {
     width: 100%;
-    max-width: 400px;
+    max-width: 200px;
+    max-height: 250px;
     /*border: 1px solid var(--button-background);*/
     border: 2px dashed gray;
     border-radius: 5px;
@@ -197,7 +205,6 @@ form .test-submit {
 .input-submit .button,
 .test-submit .button {
     width: 100px;
-    margin: 0 10px;
     background-color: var(--button-background);
     color: var(--text-button);
     border: none;
@@ -207,6 +214,9 @@ form .test-submit {
     transition: background-color 0.3s ease;
 }
 
+.input-submit .button{
+    margin-top: 10px;
+}
 .input-submit .button:hover,
 .test-submit .button:hover {
     background-color: var(--button-hover);
