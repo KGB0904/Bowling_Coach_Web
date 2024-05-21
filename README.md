@@ -56,6 +56,8 @@
 
 #### [4]
 ![4](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/e24a7acc-0b3e-450d-ba5a-1014d731ab18)
+![image](https://github.com/Wonseoop/Bowling_Coach/assets/123632194/129485bb-2c02-46fa-b3d4-7b6fec3bf69f)
+
 
 
 
