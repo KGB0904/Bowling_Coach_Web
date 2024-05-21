@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동영상 업로드 및 자르기</title>
+</head>
+<body>
+    <h1>동영상 업로드 및 자르기</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="video">동영상 파일 선택:</label>
+        <input type="file" name="video" id="video" accept="video/*">
+        <br>
+        <label for="startTime">시작 시간 (초):</label>
+        <input type="number" name="startTime" id="startTime" required>
+        <br>
+        <label for="endTime">끝 시간 (초):</label>
+        <input type="number" name="endTime" id="endTime" required>
+        <br>
+        <button type="submit">동영상 업로드 및 자르기</button>
+    </form>
+</body>
+</html>
