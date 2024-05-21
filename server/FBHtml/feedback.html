@@ -30,6 +30,9 @@
     <div class="graph-container">
         <canvas id="myLineChart"></canvas>
     </div>
+    <div id="gif-container">
+        <img src="{{gif_src}}" alt="Descriptive text about the GIF" loop="infinite">
+    </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -120,12 +123,15 @@
                 }
             }
         };
+        
 
         // 차트를 생성합니다.
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('myLineChart').getContext('2d');
             new Chart(ctx, config);
-        };
+
+            
+        })
     </script>
 </body>
 </html>

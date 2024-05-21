@@ -38,7 +38,9 @@ app.use(express.static(path.resolve(__dirname, '..', 'temp', 'edited')));    //t
 app.use(express.static(path.resolve(__dirname, '..', 'temp', 'raw')));       //raw
 app.use(express.static(path.resolve(__dirname, '..', 'FBHtml')));
 app.use(express.static(path.resolve(__dirname, '..', 'LoadHtml')));  
-app.use(express.static(path.resolve(__dirname, '..', 'GetGraph')));  
+app.use(express.static(path.resolve(__dirname, '..', 'GetGraph'))); 
+app.use(express.static(path.resolve(__dirname, '..', 'model')));  
+
 
 
 
@@ -86,6 +88,7 @@ app.post('/load', multer.single('raw'), (req, res) => {
 app.get('/feedback', (req, res) => {
   const pythonOutput = req.query.output;
   const numberOutput = req.query.number;
+  const gif_path = req.query.gif;
 
   let html = fs.readFileSync(path.resolve(__dirname, '..','FBHtml/feedback.html'), 'utf8');
   html = html.replace('{{pythonOutput}}', pythonOutput);
@@ -94,6 +97,13 @@ app.get('/feedback', (req, res) => {
   
   //꺾은선 그래프
   html = getGraphUseCase.updateGraphHtml(html, recodeFilePath, numberOutput);
+  
+  //gif 추가
+  //console.log("야야야"+gif_path)
+  html = html.replace('{{gif_src}}', gif_path);
+  console.log(html);
+
+
 
   res.send(html);
 });
@@ -114,13 +124,29 @@ io.on('connection', (socket) => {
 
   pythonProcess.stdout.on('data', (data) => {
     const dataString = data.toString();
-    const regex = /This is .*?%/;
-    const match = dataString.match(regex);
+    const Thisisregex = /This is .*?%/;
+    const gifPathRegex = /gif_path:.*\\(gif\\.*)/;
+
+    const match_Thisis = dataString.match(Thisisregex);
+    const match_gif = dataString.match(gifPathRegex);
+
+    let gifPathOutput=''
+    //gif
+
+
+
+
     console.log("-----------------------------------")
 
     console.log(`모델 출력 로그: ${dataString}`);
 
-    
+
+    //gif 경로 받고 저장
+    if( match_gif!= null){
+
+      gifPathOutput = match_gif ? match_gif[1] : 'No path found';
+      console.log(`gif_path : ${gifPathOutput}`);
+    }
     
     // "CheckPoint"로 시작하는 데이터만 클라이언트로 전송
     if (dataString.startsWith("Check") || dataString.startsWith("Error!")) {
@@ -129,17 +155,25 @@ io.on('connection', (socket) => {
 
     }
     
-    else if(match != null){
-        let pythonOutput = match[0]
-        console.log(`Output Text : ${pythonOutput}`);
-        const numberRegex = /(\d+)%/;
-        let numberMatch = pythonOutput.match(numberRegex);
-        let numberOutput = numberMatch ? numberMatch[1] : 'No number found';
-        console.log(`Output Percent : ${numberOutput}`);
+    else if(match_Thisis != null){
 
-        const redirectUrl = `/feedback?output=${encodeURIComponent(pythonOutput)}&number=${encodeURIComponent(numberOutput)}`;
-        socket.emit('redirect', redirectUrl);
+      //pythonOutput
+      let pythonOutput = match_Thisis[0]
+      console.log(`Output Text : ${pythonOutput}`);
+
+      //numberOutput
+      const numberRegex = /(\d+)%/;
+      let numberMatch = pythonOutput.match(numberRegex);
+      let numberOutput = numberMatch ? numberMatch[1] : 'No number found';
+      console.log(`Output Percent : ${numberOutput}`);
+      
+      
+
+      const redirectUrl = `/feedback?output=${encodeURIComponent(pythonOutput)}&number=${encodeURIComponent(numberOutput)}&gif=${encodeURIComponent(gifPathOutput)}`;
+      socket.emit('redirect', redirectUrl);
     }
+
+    
   })
 
   pythonProcess.stderr.on('data', (data) => {
@@ -160,7 +194,7 @@ io.on('connection', (socket) => {
 
 
 //8000번 포트 실행:
-const $PORT = process.env.PORT || 8000;
+const $PORT = process.env.PORT || 8080;
 console.log("http://localhost:"+$PORT+"/main");
 console.log("http://192.168.0.2:"+$PORT+"/main");
 

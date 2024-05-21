@@ -1,10 +1,23 @@
-import random, time
+import random, time, os
 print("CheckPoint 1",flush=True)
 time.sleep(1)
 print("CheckPoint 2",flush=True)
 time.sleep(1)
 print("CheckPoint 3",flush=True)
 time.sleep(1)
+
+file_path = os.path.abspath(__file__)
+dir = os.path.dirname(file_path)
+
+#gif_path 저장되는 폴더
+gif_output_folder = os.path.abspath(os.path.join(dir, "..", "..","server","FBHtml","gif"))
+
+#경보가 만들어줄꺼임
+gif_path=os.path.join(gif_output_folder, "sample.gif")
+
+
+print(f"gif_path:{gif_path}",flush=True)
+
 
 true_percentage = random.randint(1,100)
 accuracy=true_percentage
@@ -19,3 +32,4 @@ else:
     print(f"This is a wrong posture. Accuracy: {accuracy}%",flush=True)
 
 time.sleep(1)
+
