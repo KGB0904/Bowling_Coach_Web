@@ -194,7 +194,7 @@ io.on('connection', (socket) => {
 
 
 //8000번 포트 실행:
-const $PORT = process.env.PORT || 8080;
+const $PORT = process.env.PORT || 8000;
 console.log("http://localhost:"+$PORT+"/main");
 console.log("http://192.168.0.2:"+$PORT+"/main");
 
