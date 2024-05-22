@@ -176,8 +176,7 @@ form #preview {
 }
 
 form #preview video {
-    width: 100%;
-    max-width: 200px;
+    width: 600px;
     max-height: 250px;
     /*border: 1px solid var(--button-background);*/
     border: 2px dashed gray;
@@ -237,9 +236,10 @@ form .test-submit {
 }
 
 .video-controls {
-    width: 100%;
+    width: 600px;
     margin-top: 10px;
     margin-bottom: 2rem; /* 간격 추가 */
+    margin : auto
 }
 
 #slider .noUi-connect {
