@@ -153,9 +153,9 @@ def split_video_into_frames(video_path, output_folder, num_frames=60):
     
     video.release()
     if saved_frames != num_frames:
-        print("Not 60 frames")
+        print("Check Point 1 : Not 60 frames",flush=True)
     else:
-        print(f"Saved {num_frames} frames to {output_folder}")
+        print(f"Error! Saved {num_frames} frames to {output_folder}",flush=True)
 
 def main(video_path):
     root = os.path.dirname(os.getcwd())
@@ -163,7 +163,7 @@ def main(video_path):
     gif_output_path = os.path.join(root, "model", "output.gif")
 
     split_video_into_frames(video_path, output_folder, 60)
-    print("60프레임으로 분할 성공")
+    print("CheckPoint 2 : Successfully split into 60 frames", flush=True)
 
     base_dir = output_folder
     sequences = []
@@ -186,7 +186,8 @@ def main(video_path):
     with open('unlabeled_data.json', 'w') as json_file:
         json.dump(data, json_file)
 
-    print("시퀀스 데이터 추출 성공")
+    print("CheckPoint 3 : Sequence Data Extracted Successfully", flush=True)
+
 
     model = tf.keras.models.load_model('C:/Users/428-3090/Desktop/CNN_LSTM/asdf/VC_with_Model-main/VC_Linux/src/model/CNN_LSTM_V1.h5')
     model.summary()
@@ -213,7 +214,8 @@ def main(video_path):
 
     predictions = model.predict(test_x_train)
     anomalies, differences = detect_anomalies(test_y_train, predictions)
-    print("예측 성공")
+    print("CheckPoint 4 : prediction success", flush=True)
+
 
     def check_posture(true_array):
         true_percentage = sum(true_array) / len(true_array) * 100
@@ -228,7 +230,7 @@ def main(video_path):
             return f"This is a wrong posture. Accuracy: {accuracy}%"
 
     result = check_posture(anomalies)
-    print(result)
+    print(result,flush=True)
 
     frames_with_keypoints = []
     for i in range(1, 61):
@@ -261,11 +263,12 @@ def main(video_path):
     #     frames_with_keypoints.append(cv2.cvtColor(frame_with_keypoints, cv2.COLOR_BGR2RGB))
 
     imageio.mimsave(gif_output_path, frames_with_keypoints, fps=6)
-    print("GIF 생성 성공")
-
+    print("GIF Generation Successful",flush=True)
+    print(f"gif_path:{gif_output_path}",flush=True)
+    
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python your_script.py <video_path>")
+        print("Error!, Usage: python your_script.py <video_path>",flush=True)
         sys.exit(1)
     
     video_path = sys.argv[1]
