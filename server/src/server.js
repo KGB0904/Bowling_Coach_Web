@@ -84,6 +84,8 @@ app.post('/load', multer.single('raw'), (req, res) => {
   res.sendFile(path.resolve(__dirname , '..','LoadHtml/load.html'));
 });
 
+var cnt=5
+
 //피드백
 app.get('/feedback', (req, res) => {
   const pythonOutput = req.query.output;
@@ -97,6 +99,7 @@ app.get('/feedback', (req, res) => {
   
   //꺾은선 그래프
   html = getGraphUseCase.updateGraphHtml(html, recodeFilePath, numberOutput);
+  cnt+=1
   
   //gif 추가
   //console.log("야야야"+gif_path)

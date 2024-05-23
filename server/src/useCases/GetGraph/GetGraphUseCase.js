@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 class GetGraphUseCase{
-    updateGraphHtml(html, recodeFilePath, numberOutput) {
+    updateGraphHtml(html, recodeFilePath, numberOutput,cnt=5) {
     // HTML 파일 읽기
         //let html = fs.readFileSync((htmlFilePath), 'utf8');
         let fileContent_pre = fs.readFileSync((recodeFilePath), 'utf8');
@@ -27,8 +27,8 @@ class GetGraphUseCase{
         html = html.replace("{{accuracys}}", recodeString);
         let array = [];
        
-        for (let i = lineCount - 4; i <= lineCount; i++) {
-            array.push(i + 3);
+        for (let i = cnt - 4; i <= cnt; i++) {
+            array.push(i);
         }
         //console.log(array)
 
@@ -36,7 +36,6 @@ class GetGraphUseCase{
         html = html.replace("{{count}}", xarray);
         //console.log("왔다감");
         //console.log(html);
-
         return html;
     }
 }

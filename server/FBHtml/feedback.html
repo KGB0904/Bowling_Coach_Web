@@ -24,15 +24,36 @@
         <div class="alert alert-primary mt-4" role="alert">
             <pre id="pythonOutput">{{pythonOutput}}</pre>
         </div>
-        <button class="btn btn-primary" id="replay" onclick="location.href='/start'">✂️비디오 편집</button>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <h1 class="mt-5">📈누적 그래프</h1>
+        <div class="graph-container">
+            <canvas id="myLineChart"></canvas>
+        </div>
+    
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <center>
+            <div   div id="gif-container">
+                <h1 class="mt-5">📼FeedBack GIF</h1>
+                <br>
+                <img src="{{gif_src}}" alt="Descriptive text about the GIF" loop="infinite">
+            </div>
+        </center>
+    </div>
 
+    <br>
+    <br>
+
+    <div class="container">
+        <button class="btn btn-primary" id="replay" onclick="location.href='/start'">✂️비디오 편집</button>
     </div>
-    <div class="graph-container">
-        <canvas id="myLineChart"></canvas>
-    </div>
-    <div id="gif-container">
-        <img src="{{gif_src}}" alt="Descriptive text about the GIF" loop="infinite">
-    </div>
+    <br>
+    <br>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

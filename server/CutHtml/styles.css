@@ -137,6 +137,7 @@ form .input-block label {
     font-weight: 600;
 }
 
+
 form .input-block input[type="text"],
 form .input-block input[type="file"] {
     background-color: var(--input-background);
