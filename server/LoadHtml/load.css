@@ -1,4 +1,5 @@
 .main-header {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -26,7 +27,6 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 변화 */
 }
 
-
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -38,6 +38,18 @@ body {
   padding: 0;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 h1 {
   margin-bottom: 20px;
 }
@@ -45,15 +57,15 @@ h1 {
 #terminalOutput {
   white-space: pre-wrap;
   margin-bottom: 20px;
-  width: 80%;
+  width: 100%;
   background: #fff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #progressContainer {
-  width: 80%;
+  width: 100%;
   background-color: #e0e0e0;
   border-radius: 25px;
   overflow: hidden;

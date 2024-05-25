@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="feedback.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   
 </head>
+
 <body>
     <header class="main-header">
         <a href="/main" class="home-link">🏠Home</a>
@@ -19,18 +20,18 @@
         <div class="chart-container">
             <div class="chart" style="--percentage: 0%;">
                 <div class="percentage">0%</div>
-            </div>  
+            </div>
         </div>
         <div class="alert alert-primary mt-4" role="alert">
             <pre id="pythonOutput">{{pythonOutput}}</pre>
         </div>
     </div>
-    
+
     <br>
     <br>
     <div class="container">
         <center>
-            <div   div id="gif-container">
+            <div id="gif-container">
                 <h1 class="mt-5">📼FeedBack GIF</h1>
                 <br>
                 <img src="{{gif_src}}" alt="Descriptive text about the GIF" loop="infinite">
@@ -45,7 +46,6 @@
         <div class="graph-container">
             <canvas id="myLineChart"></canvas>
         </div>
-    
     </div>
 
     <br>
@@ -63,7 +63,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function setChartColor(percentage) {
-        const chart = document.querySelector('.chart');
+            const chart = document.querySelector('.chart');
             if (percentage < 60) {
                 chart.style.background = `conic-gradient(#ff0000 0, #ff0000 ${percentage}%, #ccc ${percentage}%, #ccc 100%)`;
             } else if (percentage < 80) {
@@ -102,7 +102,7 @@
         //////////////////////////////////////////////////////////////////
 
         const recode = JSON.parse('{{accuracys}}');
-        const  x_under= JSON.parse('{{count}}');
+        const x_under = JSON.parse('{{count}}');
         //const intArray = count.map(Number);
         //console.log(recode);
         //console.log(count);
@@ -114,7 +114,7 @@
                 borderColor: 'rgba(153, 102, 255, 1)',
                 data: recode,
                 fill: false,
-                pointBackgroundColor: function(context) {
+                pointBackgroundColor: function (context) {
                     const index = context.dataIndex;
                     const dataLength = context.dataset.data.length;
                     return index === dataLength - 1 ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)';
@@ -146,15 +146,13 @@
                 }
             }
         };
-        
 
         // 차트를 생성합니다.
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('myLineChart').getContext('2d');
             new Chart(ctx, config);
-
-            
         })
     </script>
 </body>
+
 </html>

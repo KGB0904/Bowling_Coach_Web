@@ -27,6 +27,7 @@ body {
     background-color: #f8f9fa;
     color: #343a40;
 }
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -35,12 +36,14 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .alert {
     font-family: 'Courier New', Courier, monospace;
     background-color: #f3e5f5;
     border-color: #d1c4e9;
     color: #6a1b9a;
 }
+
 h1 {
     font-family: 'Arial', sans-serif;
     font-weight: bold;
@@ -49,12 +52,14 @@ h1 {
     margin-bottom: 1.5rem;
     color: #6a1b9a;
 }
+
 pre {
     background-color: #f3e5f5;
     padding: 1rem;
     border-radius: 5px;
     overflow-x: auto;
 }
+
 .btn {
     display: block;
     width: 100%;
@@ -64,16 +69,19 @@ pre {
     border-color: #6a1b9a;
     color: #fff;
 }
+
 .btn:hover {
     background-color: #4a148c;
     border-color: #4a148c;
 }
+
 .chart-container {
     position: relative;
     width: 200px;
     height: 200px;
     margin: 2rem auto;
 }
+
 .chart {
     width: 100%;
     height: 100%;
@@ -84,6 +92,7 @@ pre {
     align-items: center;
     transition: background 0.5s linear;
 }
+
 .chart::before {
     content: "";
     position: absolute;
@@ -92,6 +101,7 @@ pre {
     background: white;
     border-radius: 50%;
 }
+
 .percentage {
     position: absolute;
     font-size: 2em;
@@ -104,5 +114,10 @@ pre {
 }
 
 #myLineChart {
-    margin-top: 50px
+    margin-top: 50px;
+}
+
+#gif-container img {
+    max-width: 100%;
+    height: auto;
 }
