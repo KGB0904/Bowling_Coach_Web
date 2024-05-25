@@ -30,7 +30,7 @@ class CutVideoUseCase {
 
             // 잘라내기가 완료된 후 필요한 작업 수행
             fs.unlinkSync(input);                       //input 파일 링크(연결) 끊기
-            removeVideoUseCase.execute(output);         //30분뒤 파일 삭제
+            removeVideoUseCase.execute(output);         //1분뒤 파일 삭제
             
             return true;
         } catch (error) {                                       //에러 발생시

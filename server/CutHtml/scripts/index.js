@@ -94,7 +94,7 @@ video.addEventListener('timeupdate', () => {
 
 //끝 이라는 숫자 나오게
 video.addEventListener('loadeddata', () => {
-    Video.loadeddata(iTo, Utils); // iTo.value를 영상 총 길이로 업데이트
+    Video.loadeddata(iFrom,iTo, Utils); // iTo.value를 영상 총 길이로 업데이트
     syncScrubberWithVideo(); // 스크롤바 동기화
     videoScrubber.noUiSlider.set(0)
 });
@@ -104,7 +104,7 @@ iTo.addEventListener("change", formatTime); // 위와 동일
 iFile.addEventListener('change', readFile); // 파일 읽는 이벤트 추가
 
 //videoScrubber.addEventListener('input', syncVideoWithScrubber);   // 스크롤바 드래그 시 비디오 시간 동기화
-var from_time
+var from_time =0
 slider.noUiSlider.on('slide', function (values, handle) {           //이중스크롤바 슬라이드 이벤트 핸들러
     
     if (handle === 0) {

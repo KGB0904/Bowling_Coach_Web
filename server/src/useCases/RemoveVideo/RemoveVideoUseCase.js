@@ -7,7 +7,7 @@ class RemoveVideoUseCase {
     execute(path) {
         const filepath = resolve(createTemporaryFolder.path, 'edited', path);
         const fileExists = fs.existsSync(filepath);
-        const TWENTY_NINE_MINUTES = 29 * 60 * 1000; //30분
+        const TWENTY_NINE_MINUTES = 10 * 60 * 1000; //10분
 
         //파일 존재하면 
         if(fileExists) {

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     terminalOutput.innerHTML += data + '<br>';
 
     // Increase progress by 25% for each terminalData event
-    progress += 25;
+    progress += 20;
     progressBar.style.width = progress + '%';
     progressBar.innerText = progress + '%';
   });

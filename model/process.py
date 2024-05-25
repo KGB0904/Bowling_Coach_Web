@@ -7,11 +7,13 @@ import tensorflow_hub as hub
 import json
 from PIL import Image, ImageDraw
 import imageio
-from get_folder import * 
+from get_next_path import * 
+import time
+print("CheckPoint 1 : Start feedback",flush=True)
 
-print("CheckPoint 1 : Start feedback")
 movenet = hub.load("https://tfhub.dev/google/movenet/singlepose/lightning/4").signatures['serving_default']
 # Define keypoint dictionary and edge pairs
+print("Movenet load success",flush=True)
 KEYPOINT_DICT = {
     'nose': 0,
     'left_eye': 1,
@@ -155,17 +157,27 @@ def split_video_into_frames(video_path, output_folder, num_frames=60):
     
     video.release()
     if saved_frames != num_frames:
-        print("Error ! : Not 60 frames",flush=True)
+        print("Error! : Not 60 frames",flush=True)
     else:
         print(f"Saved {num_frames} frames to {output_folder}",flush=True)
 
-def main(video_path):
-    root = os.path.dirname(os.getcwd())
-    output_folder = os.path.join(root, "model", "output_folder")
-    gif_output_path = os.path.join(root, "model", "output.gif")
 
+def main(video_path):
+
+    file_path = os.path.abspath(__file__)
+    dir = os.path.dirname(file_path)
+    FBHtml_path=os.path.abspath(os.path.join(dir, "..", "server", "FBHtml"))
+
+
+
+    output_folder=get_next_output_folder(dir)
+    gif_output_path = get_next_output_gif(FBHtml_path)
+    
+    #print(f"output_folder_{output_folder}",flush=True)
+    #print(f"gif_output_path : {gif_output_path}",flush=True)
+    
     split_video_into_frames(video_path, output_folder, 60)
-    print("CheckPoint 2 : 60프레임으로 분할 성공",flush=True)
+    print("CheckPoint 2 : Successfully split into 60 frames",flush=True)
 
     base_dir = output_folder
     sequences = []
@@ -188,7 +200,7 @@ def main(video_path):
     with open('unlabeled_data.json', 'w') as json_file:
         json.dump(data, json_file)
 
-    print("CheckPoint 2 : Sequence Data Extracted Successfully",flush=True)
+    print("CheckPoint 3 : Sequence Data Extracted Successfully",flush=True)
 
     model = tf.keras.models.load_model('C:/Users/428-3090/Desktop/CNN_LSTM/asdf/VC_with_Model-main/VC_Linux/src/model/CNN_LSTM_V1.h5')
     model.summary()
@@ -215,11 +227,11 @@ def main(video_path):
 
     predictions = model.predict(test_x_train)
     anomalies, differences = detect_anomalies(test_y_train, predictions)
-    print("CheckPoint 3 : prediction success",flush=True)
+    print("CheckPoint 4 : prediction success",flush=True)
 
     def check_posture(true_array):
         true_percentage = sum(true_array) / len(true_array) * 100
-        accuracy = round(true_percentage, 2)
+        accuracy = int(true_percentage)
         if true_percentage >= 95:
             return f"This is the correct posture. Accuracy: {accuracy}%"
         elif 80 <= true_percentage < 95:
@@ -229,9 +241,7 @@ def main(video_path):
         else:
             return f"This is a wrong posture. Accuracy: {accuracy}%"
 
-    result = check_posture(anomalies)
-    print(result,flush=True)
-
+   
     frames_with_keypoints = []
     for i in range(1, 61):
         frame_filename = f'frame_{i:03d}.jpg'
@@ -262,17 +272,26 @@ def main(video_path):
     #     frame_with_keypoints = draw_keypoints(image, keypoints, original_height, original_width, is_anomaly)
     #     frames_with_keypoints.append(cv2.cvtColor(frame_with_keypoints, cv2.COLOR_BGR2RGB))
 
-    imageio.mimsave(gif_output_path, frames_with_keypoints, fps=6)
-    print("CheckPoint 4 : GIF Generation Successfull", flush=True)
+    imageio.mimsave(gif_output_path, frames_with_keypoints, fps=6,loop=0)
+    print("CheckPoint 5 : Generating GIF ... (it will take at least 10 seconds)", flush=True)
+    time.sleep(10)
+
+    #print(anomalies)
+    print(f"gif_path:{gif_output_path}",flush=True)
+
+
+    
+    result = check_posture(anomalies)
+    print(result,flush=True)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Error ! : Usage: python your_script.py <video_path>",flush=True)
+        print("Error! : Usage: python your_script.py <video_path>",flush=True)
         sys.exit(1)
-    file_path = os.path.abspath(__file__)
-    dir = os.path.dirname(file_path)
 
+    
+    
 
-    output_folder=get_next_output_folder(dir)
     video_path = sys.argv[1]
     main(video_path)

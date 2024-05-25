@@ -204,7 +204,7 @@ form .test-submit {
 
 .input-submit .button,
 .test-submit .button {
-    width: 100px;
+    width: 120px;
     background-color: var(--button-background);
     color: var(--text-button);
     border: none;

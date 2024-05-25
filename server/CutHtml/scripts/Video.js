@@ -12,7 +12,8 @@ class Video {
     }
     
     //비디오의 끝 부분을 가져와서 시간입력 to 부분에 넣기
-    loadeddata(iTo, Utils) {
+    loadeddata(iFrom,iTo, Utils) {
+        iFrom.value="00:00:00"
         iTo.value = Utils.secondsToClockTime(this.$video.duration);
         this.$video.currentTime = 0;
         //현재시간 0으로 초기화하는 이유 : 

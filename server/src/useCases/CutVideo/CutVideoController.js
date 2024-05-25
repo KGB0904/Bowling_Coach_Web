@@ -1,4 +1,5 @@
 const btoa = require("btoa");
+const bars="-----------------------------------------------------------------"
 
 class CutVideoController {
     cutVideoUseCase;            //클래스의 속성 선언
@@ -20,14 +21,14 @@ class CutVideoController {
         let { from, to } = request.body;
         // 요청에 파일이 포함되어 있는지 확인
         if (!request.file) {
-            console.log("--------------------------------");
+            console.log(bars);
 
             console.log("업로드 파일 인식 실패");
             return response.status(400).json({ error: "No file uploaded" });
 
         }
         else{
-            console.log("--------------------------------");
+            console.log(bars);
             console.log("업로드 파일 인식 성공 및 비디오 정보");
         }
         console.log("비디오 형식 : ", request.file.mimetype);
